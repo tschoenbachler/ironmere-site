@@ -129,6 +129,28 @@
   .diagram .link { stroke: var(--signal); stroke-width: 2.5; stroke-dasharray: 7 6; fill: none; }
   .diagram .head { fill: var(--signal); }
 
+
+  .badge { display: inline-block; margin-top: 8px; font-family: "Public Sans", sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0; color: var(--signal-dark); background: #dcecf2; border-radius: 999px; padding: 3px 10px; }
+  .diagram .box.edge { stroke: var(--signal); stroke-width: 2.5; fill: #e4f0f5; }
+  .diagram .solid { stroke: var(--steel); stroke-width: 2.5; }
+  .diagram .head.s { fill: var(--steel); }
+  .concepts { display: grid; gap: 20px; grid-template-columns: 1fr; margin: 0 0 12px; }
+  @media (min-width: 900px) { .concepts { grid-template-columns: 1fr 1fr; } }
+  .panel { margin: 0; background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 18px 18px 16px; }
+  .panel h3 { font-family: "Archivo", sans-serif; font-size: 1.05rem; margin: 0 0 2px; }
+  .panel .sub { margin: 0 0 14px; color: var(--steel); font-size: 0.9rem; }
+  .panel .grp { font-weight: 600; font-size: 0.92rem; margin: 14px 0 6px; }
+  .panel ul.rows { list-style: none; margin: 0; padding: 0; }
+  .panel ul.rows li { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border: 1px solid var(--rule); border-radius: 4px; padding: 8px 10px; margin-bottom: 6px; font-size: 0.92rem; }
+  .panel ul.rows .age { color: var(--steel); white-space: nowrap; font-size: 0.85rem; }
+  .sev { display: inline-block; font-size: 0.72rem; font-weight: 600; border-radius: 3px; padding: 1px 6px; margin-right: 8px; color: #fff; }
+  .sev.hi { background: #b3261e; }
+  .sev.md { background: #8a5a00; }
+  .panel svg { display: block; width: 100%; height: auto; }
+  .panel .legend { list-style: none; padding: 0; margin: 10px 0 0; font-size: 0.88rem; display: grid; gap: 4px; }
+  .panel .legend span.sw { display: inline-block; width: 22px; height: 0; border-top: 3px solid; vertical-align: middle; margin-right: 8px; }
+  .fine { color: var(--steel); font-size: 0.9rem; margin: 6px 0 0; }
+
   footer { padding: 28px 0 44px; color: var(--steel); font-size: 0.9rem; border-top: 1px solid var(--rule); }
 
   nav.site { display: flex; gap: 22px; font-size: 0.95rem; font-weight: 500; font-family: "Public Sans", sans-serif; }
@@ -209,48 +231,117 @@
     </div>
   </section>
 
-  <section class="cols">
-    <h2>Glenrock, in development</h2>
+  <section class="cols" id="glenrock">
+    <h2>Glenrock <span class="badge">In development</span></h2>
     <div>
-      <p>Glenrock is a project we are building: a monitoring platform for small and mid-size commercial buildings. It is an early-stage reference implementation and is not yet available as a product.</p>
-      <p>Our goals are to make monitoring quick to set up, to give the integrators who install it a way to earn recurring revenue, and to help building owners find energy savings.</p>
-      <p>The design keeps critical operations local to the building, so alarms and schedules keep working if the internet connection drops.</p>
-      <p>It is being built as Spring Boot and Java 21 microservices, with federated sign-in through WorkOS AuthKit.</p>
-      <p>If you are an integrator or building owner interested in this direction, we would like to hear from you.</p>
+      <p>Glenrock is a supervisory building automation and IoT platform that lets systems integrators build and commission sites for the people who own buildings. It connects HVAC controllers, air handlers, meters and sensors to the cloud for real-time visibility, trends, alarms and remote control.</p>
+      <p>Building control networks such as BACnet and Modbus were designed for closed, isolated networks, with no encryption or authentication. Glenrock links that equipment to the cloud without exposing the building's control network to the internet.</p>
+      <p>Glenrock is an early-stage reference implementation and is not yet available as a product. If you are an integrator or building owner interested in this direction, we would like to hear from you.</p>
     </div>
   </section>
 
   <section class="cols">
-    <h2>How Glenrock is designed</h2>
+    <h2>How it fits together</h2>
     <div>
-      <p>Cloud first, with control kept close to the building.</p>
+      <p>Cloud first, with control kept close to the building. A Glenrock Edge device installed in the building is the secure gateway between the building's control network and the cloud, and critical operations stay local.</p>
       <figure class="diagram">
-        <svg viewBox="0 0 520 420" role="img" aria-labelledby="dg-t dg-d">
-          <title id="dg-t">Glenrock design: cloud above, edge device at the building</title>
-          <desc id="dg-d">The cloud handles configuration, trends, reports and remote access. The edge device at the building runs alarms, schedules and control. A dashed link carries data up and configuration down, and the building keeps running if the link drops.</desc>
+        <svg viewBox="0 0 520 530" role="img" aria-labelledby="dg-t dg-d">
+          <title id="dg-t">Glenrock architecture: cloud, edge gateway, building network</title>
+          <desc id="dg-d">The cloud handles configuration, trends, reporting and remote access. The Glenrock Edge device installed in the building is a secure gateway that runs alarms, schedules and control locally. It connects to the building's BACnet and Modbus network on one side and to the cloud over a secure link on the other.</desc>
           <rect class="box cloud" x="60" y="20" width="400" height="120" rx="6"/>
-          <text class="t1" x="260" y="60" text-anchor="middle">Cloud</text>
-          <text class="t2" x="260" y="92" text-anchor="middle">Configuration, trends, reports</text>
-          <text class="t2" x="260" y="115" text-anchor="middle">and remote access</text>
+          <text class="t1" x="260" y="56" text-anchor="middle">Cloud</text>
+          <text class="t2" x="260" y="88" text-anchor="middle">Glenrock Cloud platform on AWS IoT</text>
+          <text class="t2" x="260" y="112" text-anchor="middle">Configuration, trends, reports, remote access</text>
 
-          <line class="link" x1="190" y1="278" x2="190" y2="152"/>
-          <polygon class="head" points="190,142 181,158 199,158"/>
-          <line class="link" x1="330" y1="152" x2="330" y2="268"/>
-          <polygon class="head" points="330,278 321,262 339,262"/>
-          <text class="note" x="178" y="214" text-anchor="end">data up</text>
-          <text class="note" x="342" y="214">configuration down</text>
+          <line class="link" x1="260" y1="156" x2="260" y2="194"/>
+          <polygon class="head" points="260,142 252,156 268,156"/>
+          <polygon class="head" points="260,208 252,194 268,194"/>
+          <text class="note" x="278" y="180">secure, authenticated</text>
 
-          <rect class="box" x="60" y="280" width="400" height="120" rx="6"/>
-          <text class="t1" x="260" y="320" text-anchor="middle">Edge device at the building</text>
-          <text class="t2" x="260" y="352" text-anchor="middle">Alarms, schedules and control run here,</text>
-          <text class="t2" x="260" y="375" text-anchor="middle">so the building keeps running if the link drops</text>
+          <rect class="box edge" x="60" y="210" width="400" height="120" rx="6"/>
+          <text class="t1" x="260" y="246" text-anchor="middle">Glenrock Edge</text>
+          <text class="t2" x="260" y="278" text-anchor="middle">Secure gateway installed in the building</text>
+          <text class="t2" x="260" y="302" text-anchor="middle">Alarms, schedules and control run here</text>
+
+          <line class="solid" x1="260" y1="346" x2="260" y2="384"/>
+          <polygon class="head s" points="260,332 252,346 268,346"/>
+          <polygon class="head s" points="260,398 252,384 268,384"/>
+          <text class="note" x="278" y="370">local</text>
+
+          <rect class="box" x="60" y="400" width="400" height="110" rx="6"/>
+          <text class="t1" x="260" y="436" text-anchor="middle">Building control network</text>
+          <text class="t2" x="260" y="468" text-anchor="middle">BACnet and Modbus controllers,</text>
+          <text class="t2" x="260" y="490" text-anchor="middle">sensors and equipment</text>
         </svg>
       </figure>
-      <dl class="points">
-        <div class="row"><dt>Fast setup</dt><dd>Designed so a new building can be commissioned quickly.</dd></div>
-        <div class="row"><dt>Recurring revenue</dt><dd>Designed so integrators can offer monitoring as an ongoing service.</dd></div>
-        <div class="row"><dt>Local control</dt><dd>Critical operations stay local: alarms and schedules keep working if the internet connection drops.</dd></div>
-      </dl>
+    </div>
+  </section>
+
+  <section class="cols">
+    <h2>What it is designed to do</h2>
+    <dl class="points">
+      <div class="row"><dt>See everything</dt><dd>Live values, trends and alarms from across a site's buildings and areas, in one place.</dd></div>
+      <div class="row"><dt>Commission quickly</dt><dd>Integrators set up sites, buildings and areas as a draft, apply device templates, and publish when ready.</dd></div>
+      <div class="row"><dt>Serve integrators</dt><dd>Built so integrators can offer monitoring as an ongoing service for recurring revenue.</dd></div>
+      <div class="row"><dt>Share safely</dt><dd>Separate access for administrators, operators and viewers, with each owner's data kept apart.</dd></div>
+      <div class="row"><dt>Stay in control</dt><dd>Alarms and schedules keep working if the internet connection drops.</dd></div>
+      <div class="row"><dt>Secure by design</dt><dd>Hardware-backed device identity, and every service enforces its own access control.</dd></div>
+    </dl>
+  </section>
+
+  <section class="cols">
+    <h2>Technology</h2>
+    <dl class="points">
+      <div class="row"><dt>Services</dt><dd>Java 21 and Spring Boot microservices</dd></div>
+      <div class="row"><dt>Edge to cloud</dt><dd>MQTT with Sparkplug B, through AWS IoT Core</dd></div>
+      <div class="row"><dt>Data</dt><dd>PostgreSQL, with TimescaleDB for time-series data</dd></div>
+      <div class="row"><dt>Events</dt><dd>Kafka for cloud-internal messaging (planned)</dd></div>
+      <div class="row"><dt>Building protocols</dt><dd>BACnet and Modbus</dd></div>
+      <div class="row"><dt>Equipment model</dt><dd>Project Haystack tags and Brick Schema (planned)</dd></div>
+      <div class="row"><dt>Sign-in</dt><dd>Federated authentication with WorkOS AuthKit</dd></div>
+    </dl>
+  </section>
+
+  <section class="cols">
+    <h2>Interface concepts</h2>
+    <div>
+      <div class="concepts">
+        <figure class="panel">
+          <h3>Alarms</h3>
+          <p class="sub">Active alarms across the chosen scope</p>
+          <p class="grp">Main Office, first floor</p>
+          <ul class="rows">
+            <li><span><span class="sev hi">High</span>VAV-12 Zone Temp, high limit</span><span class="age">2 h 10 min</span></li>
+            <li><span><span class="sev md">Medium</span>AHU-1 Supply Fan, command mismatch</span><span class="age">45 min</span></li>
+            <li><span><span class="sev md">Medium</span>VAV-13 Airflow, low limit</span><span class="age">12 min</span></li>
+          </ul>
+          <p class="grp">Annex Building, warehouse floor</p>
+          <ul class="rows">
+            <li><span><span class="sev hi">High</span>Unit Heater 3 Space Temp, low limit</span><span class="age">1 h 20 min</span></li>
+          </ul>
+        </figure>
+        <figure class="panel">
+          <h3>Trends</h3>
+          <p class="sub">Points from any area, on one chart, last 7 days</p>
+          <svg viewBox="0 0 400 230" role="img" aria-label="Line chart of three temperature points over seven days">
+            <g stroke="#cdd7de" stroke-width="1">
+              <line x1="40" y1="20" x2="380" y2="20"/><line x1="40" y1="80" x2="380" y2="80"/>
+              <line x1="40" y1="140" x2="380" y2="140"/><line x1="40" y1="200" x2="380" y2="200"/>
+            </g>
+            <polyline fill="none" stroke="#0b6c8a" stroke-width="3" stroke-linejoin="round" points="40,128 100,116 160,92 220,82 280,100 340,68 380,62"/>
+            <polyline fill="none" stroke="#b5521b" stroke-width="3" stroke-linejoin="round" stroke-dasharray="9 5" points="40,156 100,146 160,152 220,126 280,134 340,112 380,116"/>
+            <polyline fill="none" stroke="#2e7d4f" stroke-width="3" stroke-linejoin="round" stroke-dasharray="2 5" stroke-linecap="round" points="40,184 100,188 160,170 220,162 280,176 340,150 380,146"/>
+            <text x="40" y="222" font-size="12" fill="#52677a" font-family="Public Sans, sans-serif">7 days ago</text>
+            <text x="380" y="222" font-size="12" fill="#52677a" text-anchor="end" font-family="Public Sans, sans-serif">Now</text>
+          </svg>
+          <ul class="legend">
+            <li><span class="sw" style="border-color:#0b6c8a"></span>VAV-12 Zone Temp, first floor</li>
+            <li><span class="sw" style="border-color:#b5521b;border-top-style:dashed"></span>AHU-1 Supply Air Temp, first floor</li>
+            <li><span class="sw" style="border-color:#2e7d4f;border-top-style:dotted"></span>Unit Heater 3 Space Temp, warehouse</li>
+          </ul>
+        </figure>
+      </div>
+      <p class="fine">Interface concepts with illustrative data. Glenrock is in development and not yet available as a product.</p>
     </div>
   </section>
 
